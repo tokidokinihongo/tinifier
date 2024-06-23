@@ -14,7 +14,7 @@ if (isset($_POST['submit-button'])) {
         if (!isset($_SESSION['uid'])) {
             $query = "INSERT INTO links (link_input, link_output) VALUES ('$input', '$output');";
         } else {
-            $query = "INSERT INTO links (link_input, link_output, user_id) VALUES ('$input', '$output', '" . $_SESSION['uid'] ."');"; 
+            $query = "INSERT INTO links (link_input, link_output, user_id) VALUES ('$input', '$output', '" . $_SESSION['uid'] . "');";
         }
         $dbConn->query($query);
         $_SESSION['output-link'] = $output;
@@ -33,7 +33,5 @@ if (isset($_POST['submit-button'])) {
         echo "Successfully created short link: " . $_SESSION['output-link'];
         unset($_SESSION['output-link']);
     } ?></div>
-
 </form>
-</div>
 <?php require ('footer.php'); ?>

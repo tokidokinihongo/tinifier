@@ -18,12 +18,11 @@
 
     <div class="container">
         <header>
-            <div class="logo">LINK SHORTENER</div>
+            <div class="logo">TINIFIER</div>
             <div class="menu-items">
                 <span><a href="./index.php">Home</a></span>
                 <span><a href="./contact.php">Contact</a></span>
                 <span><a href="./links.php">Links</a></span>
                 <span><a href="./logout.php">Logout</a></span>
-                <span class="theme-changer">Dark</span>
             </div>
         </header>
