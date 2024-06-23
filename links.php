@@ -29,6 +29,7 @@ if (isset($_SESSION['uid'])) {
                     </tr>
                         ";
                 }
+                exit();
             }
         } catch (err) {
             echo "Error occured: " . $err;

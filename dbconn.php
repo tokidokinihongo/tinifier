@@ -8,7 +8,7 @@ $db = "test";
 $dbConn = new mysqli($server, $user, $password, $db);
 
 if ($dbConn->connect_error) {
-    echo "There was an issue connected to the database " . $err;
+    echo "There was an issue connecting to the database " . $err;
 }
 
 
