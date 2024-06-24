@@ -8,7 +8,10 @@ if (isset($_SESSION['uid'])) {
 if (isset($_POST['submit-button'])) {
     $rnd_id = rand(00000000, 99999999);
     $input = $_POST['link-input'];
-    $output = "localhost/shortlink/endpoint.php/$rnd_id";
+    if (!str_contains($input, 'http://') or !str_contains($input, 'https://')) {
+        $input = "https://" . $input;
+    }
+    $output = "localhost/tinifier/endpoint.php/$rnd_id";
     try {
         require ('dbconn.php');
         if (!isset($_SESSION['uid'])) {
