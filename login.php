@@ -18,15 +18,16 @@ require ('header.php');
 if (isset($_POST['login-submit'])) {
     try {
         require ('dbconn.php');
-        $query = "SELECT user_id, username FROM users WHERE username = '" . $_POST['username'] . "' AND password = '" . $_POST['password'] . "';";
-        $result = $dbConn->query($query);
+        $query = $dbConn->prepare("SELECT user_id, username FROM users WHERE username = ? AND password = ?");
+        $query->bind_param("ss", $_POST['username'], $_POST['password']);
+        $query->execute();
+        $result = $query->get_result();
         if ($result->num_rows === 1) {
             unset($_SESSION['message']);
             $row = $result->fetch_assoc();
             $_SESSION['uid'] = $row['user_id'];
             $_SESSION['user'] = $row['username'];
             header('Location: index.php');
-            exit();
         } else {
             $_SESSION['bad-credentials'] = "Bad username or password entered, please try again";
             header("Location: login.php");
