@@ -36,7 +36,25 @@ if (isset($_SESSION['uid'])) {
         echo $_SESSION['uid'];
         ?>
     </table>
-    <canvas id="link_analytics" style="width: 100%; max-width:700px"></canvas>
+
+    <?php
+    $total_array = [0, 0, 0, 0, 0];
+    try {
+        for ($x = 0; $x < 5; $x++) {
+            $number_of_clicks = "SELECT times_clicked FROM links WHERE user_id = '" . $_SESSION['uid'] . "' AND date_added = '2024-06-" . getDate()["mday"] - $x . "'";
+            $result = $dbConn->query($number_of_clicks);
+            if ($result) {
+                while ($row = $result->fetch_assoc()) {
+                    $total_array[$x] += $row['times_clicked'];
+                }
+            }
+            $result->close();
+        }
+    } catch (err) {
+        echo $err;
+    } finally {
+        echo "    
+    <canvas id='link_analytics' style='width: 100%; max-width:700px'></canvas>
     <script>
         const xValues =
             Array.from({ length: 5 }, (_, i) => {
@@ -44,13 +62,13 @@ if (isset($_SESSION['uid'])) {
                 date.setDate(date.getDate() - i);
                 return date.toISOString().split('T')[0];
             });
-        const yValues = [0, 10, 20, 30, 40, 50];
-        const chart = new Chart("link_analytics", {
-            type: "bar",
+        const yValues = [$total_array[0], $total_array[1], $total_array[2], $total_array[3], $total_array[4]];
+        const chart = new Chart('link_analytics', {
+            type: 'bar',
             data: {
                 labels: xValues,
                 datasets: [{
-                    backgroundColor: "grey",
+                    backgroundColor: 'grey',
                     data: yValues
                 }]
             },
@@ -58,7 +76,9 @@ if (isset($_SESSION['uid'])) {
                 legend: { display: true },
             }
         })
-    </script>
+    </script>";
+    }
+    ?>
 </div>
 
 <?php require ('footer.php'); ?>
