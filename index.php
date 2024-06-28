@@ -22,7 +22,7 @@ if (isset($_POST['submit-button'])) {
         if (!isset($_SESSION['uid'])) {
             $query = "INSERT INTO links (link_input, link_output) VALUES ('$input', '$output');";
         } else {
-            $query = "INSERT INTO links (link_input, link_output, user_id) VALUES ('$input', '$output', '" . $_SESSION['uid'] . "');";
+            $query = "INSERT INTO links (link_input, link_output, user_id, times_clicked) VALUES ('$input', '$output', '" . $_SESSION['uid'] . "', '0');";
         }
         $dbConn->query($query);
         $_SESSION['output-link'] = $output;

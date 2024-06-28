@@ -22,6 +22,7 @@
             <span><a href="./index.php">Home</a></span>
             <span><a href="./contact.php">Contact</a></span>
             <span><a href="./links.php">Links</a></span>
+            <span><a href="./analytics.php">Analytics</a></span>
             <span><a href="./logout.php">Logout</a></span>
         </div>
     </header>
