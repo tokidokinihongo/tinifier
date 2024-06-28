@@ -20,9 +20,9 @@ if (isset($_POST['submit-button'])) {
     try {
         require ('dbconn.php');
         if (!isset($_SESSION['uid'])) {
-            $query = "INSERT INTO links (link_input, link_output) VALUES ('$input', '$output');";
+            $query = "INSERT INTO links (link_input, link_output, date_added) VALUES ('$input', '$output', 'NOW()');";
         } else {
-            $query = "INSERT INTO links (link_input, link_output, user_id, times_clicked) VALUES ('$input', '$output', '" . $_SESSION['uid'] . "', '0');";
+            $query = "INSERT INTO links (link_input, link_output, user_id, times_clicked, date_added) VALUES ('$input', '$output', '" . $_SESSION['uid'] . "', '0', NOW());";
         }
         $dbConn->query($query);
         $_SESSION['output-link'] = $output;

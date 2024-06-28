@@ -36,6 +36,29 @@ if (isset($_SESSION['uid'])) {
         echo $_SESSION['uid'];
         ?>
     </table>
+    <canvas id="link_analytics" style="width: 100%; max-width:700px"></canvas>
+    <script>
+        const xValues =
+            Array.from({ length: 5 }, (_, i) => {
+                let date = new Date();
+                date.setDate(date.getDate() - i);
+                return date.toISOString().split('T')[0];
+            });
+        const yValues = [0, 10, 20, 30, 40, 50];
+        const chart = new Chart("link_analytics", {
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: "grey",
+                    data: yValues
+                }]
+            },
+            options: {
+                legend: { display: true },
+            }
+        })
+    </script>
 </div>
 
 <?php require ('footer.php'); ?>
