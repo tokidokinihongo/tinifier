@@ -53,7 +53,8 @@ if (isset($_SESSION['uid'])) {
     } catch (err) {
         echo $err;
     } finally {
-        echo "    
+        echo "
+    <h1>Link analaytics for $_SESSION[user]</h1>
     <canvas id='link_analytics' style='width: 100%; max-width:700px'></canvas>
     <script>
         const xValues =
@@ -68,12 +69,12 @@ if (isset($_SESSION['uid'])) {
             data: {
                 labels: xValues,
                 datasets: [{
-                    backgroundColor: 'grey',
+                    backgroundColor: 'purple',
                     data: yValues
                 }]
             },
             options: {
-                legend: { display: true },
+                legend: { display: false },
             }
         })
     </script>";
