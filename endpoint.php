@@ -24,6 +24,9 @@ try {
     }
 } catch (err) {
     echo "There was an error: " . $err;
+} finally {
+    $query->close();
+    $update_times_clicked->close();
 }
 
 ?>
