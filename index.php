@@ -6,12 +6,17 @@ if (isset($_SESSION['uid'])) {
     require ('header.php');
 }
 if (isset($_POST['submit-button'])) {
-    $rnd_id = rand(00000000, 99999999);
     $input = $_POST['link-input'];
-    if (!str_contains($input, 'http://') or !str_contains($input, 'https://')) {
+    $link_alias = "";
+    if (!str_contains($input, 'http://') and !str_contains($input, 'https://')) {
         $input = "https://" . $input;
     }
-    $output = "localhost/tinifier/endpoint.php/$rnd_id";
+    if ($_POST['alias'] === "") {
+        $link_alias = rand(00000000, 99999999);
+    } else {
+        $link_alias = $_POST['alias'];
+    }
+    $output = "localhost/tinifier/endpoint.php/$link_alias";
     try {
         require ('dbconn.php');
         if (!isset($_SESSION['uid'])) {
@@ -31,6 +36,8 @@ if (isset($_POST['submit-button'])) {
 <form class="link-generate-form" action="index.php" method="post">
     <label for="link-input"></label>Link</label><br>
     <input type="text" id="link-input" name="link-input" placeholder="Enter Link to Shorten">
+    <label for="alias">Alias (optional)</label>
+    <input type="text" id="alias" name="alias">
     <input type="submit" value="Generate Link" name="submit-button" class="submit-button">
     <div class="link-field"><?php if (isset($_SESSION['output-link'])) {
         echo "Successfully created short link: " . $_SESSION['output-link'];

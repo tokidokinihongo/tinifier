@@ -16,13 +16,14 @@
 
 <body>
 
-<div class="container">
-        <header>
-            <div class="logo">TINIFIER</div>
-            <div class="menu-items">
-                <span><a href="./index.php">Home</a></span>
-                <span><a href="./contact.php">Contact</a></span>
-                <span><a href="./login.php">Login</a></span>
-                <span><a href="./register.php">Register</a></span>
-            </div>
-        </header>
+    <header>
+        <div class="logo">TINIFIER</div>
+        <div class="menu-items">
+            <span><a href="./index.php">Home</a></span>
+            <span><a href="./contact.php">Contact</a></span>
+            <span><a href="./login.php">Login</a></span>
+            <span><a href="./register.php">Register</a></span>
+        </div>
+    </header>
+    <div class="black-tint">
+        <div class="container">
