@@ -1,15 +1,12 @@
 <?php
 
-$server = "localhost";
-$user = "root";
-$password = "";
-$db = "test";
+$server = "localhost\\sqlexpress";
+$connectionInfo = array("Database" => "tinifier");
 
-$dbConn = new mysqli($server, $user, $password, $db);
-
-if ($dbConn->connect_error) {
-    echo "There was an issue connecting to the database " . $err;
+try {
+    $dbConn = sqlsrv_connect($server, $connectionInfo);
+} catch (err) {
+    die(print_r(sqlsrv_errors(), true));
 }
-
 
 ?>

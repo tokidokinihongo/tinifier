@@ -16,12 +16,12 @@ if (isset($_SESSION['uid'])) {
             <th>Link Output</th>
         </tr>
         <?php
-        $query = "SELECT links.user_id, links.link_input, links.link_output FROM links JOIN users ON users.user_id = links.user_id WHERE links.user_id = '" . $_SESSION['uid'] . "';";
         try {
             require ('dbconn.php');
-            $results = $dbConn->query($query);
-            if ($results->num_rows >= 1) {
-                while ($row = $results->fetch_assoc()) {
+            $sql = "SELECT links.user_id, links.link_input, links.link_output FROM links JOIN users ON users.user_id = links.user_id WHERE links.user_id = ?;";
+            $sql = sqlsrv_prepare($dbConn, $sql, array($_SESSION['uid']));
+            if (sqlsrv_execute($sql)) {
+                while ($row = sqlsrv_fetch_array($sql, SQLSRV_FETCH_ASSOC)) {
                     $inp = $row['link_input'];
                     $out = $row['link_output'];
                     echo "
@@ -32,7 +32,7 @@ if (isset($_SESSION['uid'])) {
                         ";
                 }
             }
-        } catch (err) {
+        } catch (Exception $errr) {
             echo "Error occured: " . $err;
         }
         ?>
@@ -42,17 +42,17 @@ if (isset($_SESSION['uid'])) {
     <?php
     $total_array = [0, 0, 0, 0, 0];
     try {
-        for ($x = 0; $x < 5; $x++) {
-            $number_of_clicks = "SELECT times_clicked FROM links WHERE user_id = '" . $_SESSION['uid'] . "' AND date_added = '2024-06-" . getDate()["mday"] - $x . "'";
-            $result = $dbConn->query($number_of_clicks);
-            if ($result) {
-                while ($row = $result->fetch_assoc()) {
-                    $total_array[$x] += $row['times_clicked'];
+        for ($i = 0; $i < 5; $i++) {
+            $date_full = getdate()["year"] . "-" . getdate()["mon"] . "-" . getdate()["mday"] - $i;
+            $sql = "SELECT times_clicked FROM links WHERE user_id = ? AND date_added = ?";
+            $sql = sqlsrv_prepare($dbConn, $sql, array($_SESSION['uid'], $date_full));
+            if (sqlsrv_execute($sql)) {
+                while ($row = sqlsrv_fetch_array($sql, SQLSRV_FETCH_ASSOC)) {
+                    $total_array[$i] += $row['times_clicked'];
                 }
             }
-            $result->close();
         }
-    } catch (err) {
+    } catch (Exception $err) {
         echo $err;
     } finally {
         echo "
@@ -80,6 +80,7 @@ if (isset($_SESSION['uid'])) {
             }
         })
     </script>";
+    sqlsrv_close($dbConn);
     }
     ?>
 </div>

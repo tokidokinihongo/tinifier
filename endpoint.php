@@ -6,10 +6,10 @@ $trimmed_url = "%" . $trimmed_url[3] . "%";
 
 try {
     require ('dbconn.php');
-    $query = $dbConn->prepare("SELECT link_input, link_output, times_clicked FROM links WHERE link_output LIKE ?");
-    $query->bind_param("s", $trimmed_url);
-    $query->execute();
-    $result = $query->get_result();
+    $sql = $dbConn->prepare("SELECT link_input, link_output, times_clicked FROM links WHERE link_output LIKE ?");
+    $sql->bind_param("s", $trimmed_url);
+    $sql->execute();
+    $result = $sql->get_result();
     if ($result->num_rows >= 1) {
         while ($row = $result->fetch_assoc()) {
             $link_output = $row['link_output'];
@@ -25,7 +25,7 @@ try {
 } catch (err) {
     echo "There was an error: " . $err;
 } finally {
-    $query->close();
+    $sql->close();
     $update_times_clicked->close();
 }
 

@@ -16,9 +16,9 @@ require ('header.php');
 if (isset($_POST['submit-register-form'])) {
     try {
         require ('dbconn.php');
-        $query = $dbConn->prepare("INSERT INTO users (username, password) VALUES(?, ?)");
-        $query->bind_param("ss", $_POST['username'], $_POST['password']);
-        $query->execute();
+        $sql = "INSERT INTO users (username, password) VALUES(?, ?)";
+        $sql = sqlsrv_prepare($dbConn, $sql, array($_POST['username'], $_POST['password']));
+        sqlsrv_execute($sql);
     } catch (err) {
         echo "There was an error: " . $err;
     }

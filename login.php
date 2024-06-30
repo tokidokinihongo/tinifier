@@ -18,13 +18,11 @@ require ('header.php');
 if (isset($_POST['login-submit'])) {
     try {
         require ('dbconn.php');
-        $query = $dbConn->prepare("SELECT user_id, username FROM users WHERE username = ? AND password = ?");
-        $query->bind_param("ss", $_POST['username'], $_POST['password']);
-        $query->execute();
-        $result = $query->get_result();
-        if ($result->num_rows === 1) {
+        $sql = "SELECT user_id, username FROM users WHERE username = ? AND password = ?";
+        $sql = sqlsrv_prepare($dbConn, $sql, array($_POST['username'], $_POST['password']));
+        if (sqlsrv_execute($sql)) {
             unset($_SESSION['message']);
-            $row = $result->fetch_assoc();
+            $row = sqlsrv_fetch_array($sql, SQLSRV_FETCH_ASSOC);
             $_SESSION['uid'] = $row['user_id'];
             $_SESSION['user'] = $row['username'];
             header('Location: index.php');

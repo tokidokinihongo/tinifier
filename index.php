@@ -21,14 +21,17 @@ if (isset($_POST['submit-button'])) {
     $output = "localhost/tinifier/endpoint.php/$link_alias";
     try {
         require ('dbconn.php');
+        $date_full = getdate()["year"] . "-" . getdate()["mon"] . "-" . getdate()["mday"];
         if (!isset($_SESSION['uid'])) {
-            $query = "INSERT INTO links (link_input, link_output, date_added) VALUES ('$input', '$output', 'NOW()');";
+            $sql = "INSERT INTO links (link_input, link_output, date_added) VALUES (?, ?, ?);";
+            $query = sqlsrv_prepare($dbConn, $sql, array($input, $output, $date_full));
         } else {
-            $query = "INSERT INTO links (link_input, link_output, user_id, times_clicked, date_added) VALUES ('$input', '$output', '" . $_SESSION['uid'] . "', '0', NOW());";
+            $sql = "INSERT INTO links (link_input, link_output, user_id, times_clicked, date_added) VALUES (?, ?, ?, ?, ?);";
+            $query = sqlsrv_prepare($dbConn, $sql, array($input, $output, $_SESSION['uid'], 0, $date_full));
         }
-        $dbConn->query($query);
+        sqlsrv_execute($query);
         $_SESSION['output-link'] = $output;
-    } catch (err) {
+    } catch (Exception $err) {
         echo "There was an error: " . $err;
     }
 }
