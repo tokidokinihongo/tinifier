@@ -1,8 +1,10 @@
 <?php
 session_start();
 if (isset($_SESSION['uid'])) {
+    $style = "links.css";
     require ('authheader.php');
 } else {
+    $style = "links.css";
     require ('header.php');
 } ?>
 
@@ -33,10 +35,10 @@ if (isset($_SESSION['uid'])) {
         } catch (err) {
             echo "Error occured: " . $err;
         }
-        echo $_SESSION['uid'];
         ?>
     </table>
-
+</div>
+<div class="personal-links">
     <?php
     $total_array = [0, 0, 0, 0, 0];
     try {
@@ -69,7 +71,7 @@ if (isset($_SESSION['uid'])) {
             data: {
                 labels: xValues,
                 datasets: [{
-                    backgroundColor: 'purple',
+                    backgroundColor: 'skyblue',
                     data: yValues
                 }]
             },

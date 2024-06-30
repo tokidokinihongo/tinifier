@@ -1,8 +1,10 @@
 <?php
 session_start();
 if (isset($_SESSION['uid'])) {
+    $style = "style.css";
     require ('authheader.php');
 } else {
+    $style = "style.css";
     require ('header.php');
 }
 if (isset($_POST['submit-button'])) {
