@@ -1,10 +1,12 @@
-<?php 
+<?php
 session_start();
+$style = "style.css";
 if (isset($_SESSION['uid'])) {
     require ('authheader.php');
 } else {
     require ('header.php');
-} ?>
+}
+ ?>
 
 <form class="contact-form" action="https://formspree.io/f/xovaapbd" method="post">
     <label for="email">E-mail</label>

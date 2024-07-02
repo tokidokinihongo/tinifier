@@ -3,17 +3,6 @@ session_start();
 require ('header.php');
 ?>
 
-<form class="login-form" action="login.php" method="post">
-    <label for="username">Username</label><br>
-    <input type="text" id="username" name="username"><br>
-    <label for="password">Password</label><br>
-    <input type="password" id="password" name="password"><br><br>
-    <div class="err-field"><?php if (isset($_SESSION['bad-credentials'])) {
-        echo $_SESSION['bad-credentials'];
-    } ?></div>
-    <input type="submit" name="login-submit" value="Login" class="login-submit">
-</form>
-
 <?php
 if (isset($_POST['login-submit'])) {
     try {
@@ -36,5 +25,16 @@ if (isset($_POST['login-submit'])) {
 }
 
 ?>
+
+<form class="login-form" action="login.php" method="post">
+    <label for="username">Username</label><br>
+    <input type="text" id="username" name="username"><br>
+    <label for="password">Password</label><br>
+    <input type="password" id="password" name="password"><br><br>
+    <div class="err-field"><?php if (isset($_SESSION['bad-credentials'])) {
+        echo $_SESSION['bad-credentials'];
+    } ?></div>
+    <input type="submit" name="login-submit" value="Login" class="login-submit">
+</form>
 
 <?php require ('footer.php'); ?>

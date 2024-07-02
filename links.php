@@ -1,10 +1,9 @@
 <?php
 session_start();
+$style = "links.css";
 if (isset($_SESSION['uid'])) {
-    $style = "links.css";
     require ('authheader.php');
 } else {
-    $style = "links.css";
     require ('header.php');
 } ?>
 
@@ -32,7 +31,7 @@ if (isset($_SESSION['uid'])) {
                         ";
                 }
             }
-        } catch (Exception $errr) {
+        } catch (Exception $err) {
             echo "Error occured: " . $err;
         }
         ?>
@@ -43,7 +42,18 @@ if (isset($_SESSION['uid'])) {
     $total_array = [0, 0, 0, 0, 0];
     try {
         for ($i = 0; $i < 5; $i++) {
-            $date_full = getdate()["year"] . "-" . getdate()["mon"] . "-" . getdate()["mday"] - $i;
+            $year = getdate()["year"];
+            $mon = getdate()["mon"];
+            $day = getdate()["mday"];
+            // echo "The first day is: $day<br>";
+            if ($day - $i <= 0) {
+                $day = 33; #compensates for the counter
+                $mon = getdate()["mon"] - 1;
+            }
+            // echo "The counter is: $i<br>";
+            // echo "The adjusted day is: $day<br>";
+            $date_full = $year . "-" . $mon . "-" . $day - $i;
+            // echo "The subtracted day is: " . $day - $i . "<br>" . "";
             $sql = "SELECT times_clicked FROM links WHERE user_id = ? AND date_added = ?";
             $sql = sqlsrv_prepare($dbConn, $sql, array($_SESSION['uid'], $date_full));
             if (sqlsrv_execute($sql)) {
@@ -80,7 +90,8 @@ if (isset($_SESSION['uid'])) {
             }
         })
     </script>";
-    sqlsrv_close($dbConn);
+        echo $total_array[0], $total_array[1], $total_array[2], $total_array[3], $total_array[4];
+        sqlsrv_close($dbConn);
     }
     ?>
 </div>

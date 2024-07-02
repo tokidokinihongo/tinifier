@@ -5,7 +5,7 @@ $connectionInfo = array("Database" => "tinifier");
 
 try {
     $dbConn = sqlsrv_connect($server, $connectionInfo);
-} catch (err) {
+} catch (Error $err) {
     die(print_r(sqlsrv_errors(), true));
 }
 
