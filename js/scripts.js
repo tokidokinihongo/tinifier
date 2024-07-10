@@ -6,6 +6,7 @@ const link_generate = document.querySelector('.link-generate-form');
 const theme_change = document.querySelector('.theme-changer');
 const header = document.querySelector('header');
 const body = document.querySelector('body');
+const inpcell = document.querySelector('.inpcell');
 
 submit_button.addEventListener('click', (e) => {
     if (link_input.value === "") {
